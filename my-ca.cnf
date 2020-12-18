@@ -1,0 +1,56 @@
+[default]
+name                    = my-ca
+default_ca              = ca_default
+name_opt                = utf8,esc_ctrl,multiline,lname,align
+
+[ca_dn]
+countryName             = "DE"
+organizationName        = "Klabauter"
+commonName              = "Testumgebung CA-Root"
+localityName            = "Hamburg"
+
+[ca_default]
+home                    = .
+database                = my-ca.db
+serial                  = my-ca.serial
+certificate             = my-ca.crt
+unique_subject          = no
+copy_extensions         = none
+default_days            = 3650
+default_md              = sha256
+policy                  = policy_c_o_match
+private_key             = my-ca.key
+new_certs_dir           = $home
+
+[policy_c_o_match]
+countryName             = optional
+stateOrProvinceName     = optional
+organizationName        = optional
+organizationalUnitName  = optional
+commonName              = optional
+emailAddress            = optional
+localityName            = optional
+
+[req]
+default_bits            = 4096
+encrypt_key             = yes
+default_md              = sha256
+utf8                    = yes
+string_mask             = utf8only
+prompt                  = no
+distinguished_name      = ca_dn
+req_extensions          = ca_ext
+
+[ca_ext]
+basicConstraints        = critical,CA:true
+keyUsage                = critical,keyCertSign,cRLSign
+subjectKeyIdentifier    = hash
+subjectAltName          = email:bla@blub.de
+
+[client_ext]
+authorityKeyIdentifier  = keyid:always
+basicConstraints        = critical,CA:false
+extendedKeyUsage        = clientAuth,serverAuth
+keyUsage                = critical,digitalSignature,keyEncipherment
+subjectKeyIdentifier    = hash
+subjectAltName          = email:bla@blub.de

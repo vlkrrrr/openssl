@@ -1,0 +1,18 @@
+[default]
+name                    = my-client
+name_opt                = utf8,esc_ctrl,multiline,lname,align
+
+[client_dn]
+countryName             = "DE"
+organizationName        = "Klabauter"
+commonName              = "Testumgebung Client"
+localityName            = "Hamburg"
+
+[req]
+default_bits            = 2048
+encrypt_key             = yes
+default_md              = sha256
+utf8                    = yes
+string_mask             = utf8only
+prompt                  = no
+distinguished_name      = client_dn
